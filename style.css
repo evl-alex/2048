@@ -1,0 +1,236 @@
+body {
+    background-color: #ECECEA;
+}
+
+.container {
+    margin: 20px auto;
+    background-color: rgba(172, 175, 168, 0.33);
+    width: 600px;
+    border-radius: 5px;
+}
+
+.welcome {
+    padding-top: 5px;
+    text-align: center;
+    color: #4b423f;
+}
+
+.welcome h2 {
+    margin-bottom: 5px
+}
+
+/* New game - save - load buttons */
+
+.controls {
+    text-align: center;
+}
+
+.controls button {
+    width: 130px;
+    margin: 10px;
+    padding: 5px;
+    background-color: rgb(183, 171, 159);
+    border-radius: 5px;
+    color: white;
+    font-size: 16px;
+    letter-spacing: 1px;
+    text-shadow: 1px 1px 1px gray;
+    text-transform: uppercase;
+}
+
+.controls button span {
+    cursor: pointer;
+    display: inline-block;
+    position: relative;
+    transition: 0.5s;
+}
+
+.controls button span:after {
+    content: '\00bb';
+    position: absolute;
+    opacity: 0;
+    top: 0;
+    right: -10px;
+    transition: 0.5s;
+}
+
+.controls button:hover span {
+    padding-right: 20px;
+}
+
+.controls button:hover span:after {
+    opacity: 1;
+    right: 0;
+}
+
+.controls button:focus {
+    outline: none;
+}
+
+.controls button:active {
+    background-color: rgb(147, 135, 124);
+}
+
+.scores {
+    text-align: center;
+}
+
+.highscore {
+    width: 130px;
+    display: inline-block;
+    margin: 10px;
+    background-color: #eee4dc;
+    border: 1px solid #bbada2;
+    border-radius: 5px;
+    color: #584f47;
+    font-size: 1.1em;
+    text-transform: lowercase;
+    font-style: italic;
+}
+
+.highscore p {
+    margin: 5px;
+}
+
+.score {
+    font-style: normal;
+    color: #8d7136;
+}
+
+/* Playing field */
+
+.playField {
+    width: 450px;
+    height: 480px;
+    margin: auto;
+    padding-top: 30px;
+    padding-bottom: 70px;
+}
+
+.playField > div {
+    width: 100px;
+    height: 100px;
+    font-size: 50px;
+    display: flex;
+    align-items: center;
+}
+
+table {
+    border-spacing: 15px;
+    background-color: #bbada1;
+    border-radius: 5px;
+}
+
+td {
+    width: 100px;
+    height: 100px;
+    background-color: #cdc1b5;
+    border-radius: 5px;
+    text-align: center;
+    font-size: 60px;
+    font-weight: bold;
+}
+
+/* Cell number formatting */
+
+.n2 {
+    background-color: #eee4db;
+    color: #776e65;
+}
+
+.n2:before {
+    content: '2';
+}
+
+.n4 {
+    background-color: #ede1c9;
+    color: #776e65;
+}
+
+.n4:before {
+    content: '4';
+}
+
+.n8 {
+    background-color: #f2b27c;
+    color: #f9f6f2;
+}
+
+.n8:before {
+    content: '8';
+}
+
+.n16 {
+    background-color: #f59566;
+    color: #f9f6f2;
+}
+
+.n16:before {
+    content: '16';
+}
+
+
+.n32 {
+    background-color: #f67b61;
+    color: #f9f6f2;
+}
+
+.n32:before {
+    content: '32';
+}
+
+.n64 {
+    background-color: #f65c3e;
+    color: #f9f6f2;
+}
+
+.n64:before {
+    content: '64';
+}
+
+.n128 {
+    background-color: #edcf72;
+    color: #f9f6f2;
+}
+
+.n128:before {
+    content: '128';
+}
+
+.n256 {
+    background-color: #edcc61;
+    color: #f9f6f2;
+}
+
+.n256:before {
+    content: '256';
+}
+
+.n512 {
+    background-color: #e7db17;
+    color: #f9f6f2;
+}
+
+.n512:before {
+    content: '512';
+}
+
+.n1024 {
+    background-color: #e7c417;
+    color: #f9f6f2;
+    font-size: 40px;
+}
+
+.n1024:before {
+    content: '1024';
+}
+
+.n2048 {
+    background-color: #efebf2;
+    color: #d10900;
+    font-size: 40px;
+}
+
+.n2048:before {
+    content: '2048';
+}
