@@ -38,6 +38,7 @@ class Playfield {
     }
 
     moveTile(y, x, ny, nx) {
+        // Check is input is correct
         if (!this.tiles[y][x]) {
             console.log(`Error while moving ${y},${x} to ${ny},${nx}: incorrect cords ${y},${x}`);
             return;
@@ -46,70 +47,120 @@ class Playfield {
             return;
         }
 
+        // Add tile
         this.addTile(ny, nx, this.tiles[y][x].value);
         this.removeTile(y, x);
     }
 
+    sumTiles(y, x, ny, nx){
+        if (this.tiles[y][x].value === 2048) return;
+        this.removeTile(ny, nx);
+        this.addTile(ny, nx, this.tiles[y][x].value * 2);
+        this.removeTile(y, x);
+    }
+
+    addRandomTile() {
+        // Add new "2" tile to empty cell
+        function randomInteger(min, max) {
+            let rand = min - 0.5 + Math.random() * (max - min + 1);
+            rand = Math.round(rand);
+            return rand;
+        }
+
+        let y = randomInteger(0, 3);
+        let x = randomInteger(0, 3);
+
+        while(this.tiles[y][x]){
+            console.log(`Random tile to cell ${y},${x}`);
+            y = randomInteger(0, 3);
+            x = randomInteger(0, 3);
+        }
+
+        this.addTile(y, x, 2);
+    }
+
     moveAllTiles(keyCode) {
+        this.addRandomTile();
+
         switch (keyCode) {
             case 37:
+                console.log("LEFT arrow pressed");
                 for (let y = 0; y < 4; y++) {
                     for (let x = 1; x < 4; x++) {
                         if (this.tiles[y][x]) {
-                            let i = 0;
-                            while (i < 4 && this.tiles[y][i]) {
-                                if (i < x && this.tiles[y][i].value) {
-                                    alert(`Left to the ${this.tiles[y][x].value} is tile ${this.tiles[y][i].value}`);
-                                }
-                                i++;
+                            let nextCell = null;
+
+                            for (let i = x - 1; i >= 0; i--) {
+                                if (this.tiles[y][i]) {
+                                    if (this.tiles[y][i].value === this.tiles[y][x].value) this.sumTiles(y, x, y, i);
+                                    break;
+                                } else nextCell = i;
                             }
 
-                            if (i < x) {
-                                this.moveTile(y, x, y, i);
-                            }
+                            if (nextCell !== null) this.moveTile(y, x, y, nextCell);
                         }
                     }
                 }
-                console.log("LEFT arrow pressed");
                 break;
 
             case 38:
+                console.log("UP arrow pressed");
                 for (let x = 0; x < 4; x++) {
                     for (let y = 1; y < 4; y++) {
                         if (this.tiles[y][x]) {
-                            let i = 0;
-                            while (i < 4 && this.tiles[i][x]) i++;
-                            if (i < y) this.moveTile(y, x, i , x);
+                            let nextCell = null;
+
+                            for (let i = y - 1; i >= 0; i--) {
+                                if (this.tiles[i][x]) {
+                                    if (this.tiles[i][x].value === this.tiles[y][x].value) this.sumTiles(y, x, y, i);
+                                    break;
+                                } else nextCell = i;
+                            }
+
+                            if (nextCell !== null) this.moveTile(y, x, nextCell, x);
                         }
                     }
                 }
-                console.log("UP arrow pressed");
                 break;
 
             case 39:
+                console.log("RIGHT arrow pressed");
                 for (let y = 0; y < 4; y++) {
                     for (let x = 2; x >= 0; x--) {
                         if (this.tiles[y][x]) {
-                            let i = 3;
-                            while (i >= 0 && this.tiles[y][i]) i--;
-                            if (i > x) this.moveTile(y, x, y, i);
+                            let nextCell = null;
+
+                            for (let i = x + 1; i < 4; i++) {
+                                if (this.tiles[y][i]) {
+                                    if (this.tiles[y][i].value === this.tiles[y][x].value) this.sumTiles(y, x, y, i);
+                                    break;
+                                } else nextCell = i;
+                            }
+
+                            if (nextCell !== null) this.moveTile(y, x, y, nextCell);
                         }
                     }
                 }
-                console.log("RIGHT arrow pressed");
                 break;
 
             case 40:
+                console.log("DOWN arrow pressed");
                 for (let x = 0; x < 4; x++) {
                     for (let y = 2; y >= 0; y--) {
                         if (this.tiles[y][x]) {
-                            let i = 3;
-                            while (i >= 0 && this.tiles[i][x]) i--;
-                            if (i > y) this.moveTile(y, x, i , x);
+                            let nextCell = null;
+
+                            for (let i = y + 1; i < 4; i++) {
+                                if (this.tiles[i][x]) {
+                                    if (this.tiles[i][x].value === this.tiles[y][x].value) this.sumTiles(y, x, i, x);
+                                    break;
+                                } else nextCell = i;
+                            }
+
+                            if (nextCell !== null) this.moveTile(y, x, nextCell, x);
                         }
                     }
                 }
-                console.log("DOWN arrow pressed");
                 break;
 
             default:
@@ -139,9 +190,10 @@ function handleKeypress(event) {
 let field = new Playfield(document.querySelector(".playField"));
 
 field.addTile(0, 1, 4);
+field.addTile(1, 0, 32);
 field.addTile(1, 1, 32);
 field.addTile(1, 3, 2);
 field.addTile(2, 0, 16);
 field.addTile(2, 1, 8);
-field.addTile(3, 2, 8);
+// field.addTile(3, 2, 8);
 // field.moveTile(1, 3, 0, 1);
