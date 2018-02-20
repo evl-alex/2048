@@ -1,7 +1,5 @@
 <?php
 include 'config.php';
-
-
 ?>
 
 <!doctype html>
@@ -36,36 +34,9 @@ include 'config.php';
             </div>
         </section>
         <section class="playField">
-            <table>
-                <tbody>
-                    <tr>
-                        <td></td>
-                        <td class="n2"></td>
-                        <td class="n4"></td>
-                        <td class="n8"></td>
-                    </tr>
-                    <tr>
-                        <td class="n16"></td>
-                        <td class="n32"></td>
-                        <td class="n64"></td>
-                        <td class="n128"></td>
-                    </tr>
-                    <tr>
-                        <td class="n256"></td>
-                        <td class="n1024"></td>
-                        <td class="n2048"></td>
-                        <td class="n512"></td>
-                    </tr>
-                    <tr>
-                        <td class="n512"></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                    </tr>
-                </tbody>
-            </table>
         </section>
     </div>
-    <script src="js.js"></script>
+    <script src="menu.js"></script>
+    <script src="playfield.js"></script>
 </body>
 </html>

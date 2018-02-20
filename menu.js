@@ -7,7 +7,7 @@ function getUserName() {
     return "Alex";
 }
 
-/* Highscore section*/
+/* Highscore section */
 
 let currentScore = document.getElementById("currentScore");
 let personalBestScore = document.getElementById("personalBestScore");
@@ -35,14 +35,14 @@ function getScore(scoreType) {
 let buttonNewGame = document.querySelector("button[name = newGame]");
 let buttonSaveGame = document.querySelector("button[name = saveGame]");
 let buttonLoadGame = document.querySelector("button[name = loadGame]");
-
+function clearField() {
+    alert("Хуй!");
+}
 buttonNewGame.addEventListener("click", clearField);
 buttonSaveGame.addEventListener("click", saveGame);
 buttonLoadGame.addEventListener("click", loadGame);
 
-function clearField() {
-    alert("Хуй!");
-}
+
 
 function saveGame() {
     alert("Development in progress");
@@ -51,4 +51,3 @@ function saveGame() {
 function loadGame() {
     alert("Development in progress");
 }
-
