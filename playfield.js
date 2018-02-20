@@ -57,8 +57,16 @@ class Playfield {
                     for (let x = 1; x < 4; x++) {
                         if (this.tiles[y][x]) {
                             let i = 0;
-                            while (this.tiles[y][i]) i++;
-                            if (i < x) this.moveTile(y, x, y, i);
+                            while (i < 4 && this.tiles[y][i]) {
+                                if (i < x && this.tiles[y][i].value) {
+                                    alert(`Left to the ${this.tiles[y][x].value} is tile ${this.tiles[y][i].value}`);
+                                }
+                                i++;
+                            }
+
+                            if (i < x) {
+                                this.moveTile(y, x, y, i);
+                            }
                         }
                     }
                 }
@@ -70,7 +78,7 @@ class Playfield {
                     for (let y = 1; y < 4; y++) {
                         if (this.tiles[y][x]) {
                             let i = 0;
-                            while (this.tiles[i][x]) i++;
+                            while (i < 4 && this.tiles[i][x]) i++;
                             if (i < y) this.moveTile(y, x, i , x);
                         }
                     }
@@ -83,7 +91,7 @@ class Playfield {
                     for (let x = 2; x >= 0; x--) {
                         if (this.tiles[y][x]) {
                             let i = 3;
-                            while (this.tiles[y][i]) i--;
+                            while (i >= 0 && this.tiles[y][i]) i--;
                             if (i > x) this.moveTile(y, x, y, i);
                         }
                     }
@@ -96,7 +104,7 @@ class Playfield {
                     for (let y = 2; y >= 0; y--) {
                         if (this.tiles[y][x]) {
                             let i = 3;
-                            while (this.tiles[i][x]) i--;
+                            while (i >= 0 && this.tiles[i][x]) i--;
                             if (i > y) this.moveTile(y, x, i , x);
                         }
                     }
