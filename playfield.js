@@ -1,8 +1,11 @@
 /* Playfield section */
+let field;
 
 class Playfield {
     constructor (parent) {
+        let _this = this;
         this.table = document.createElement("table");
+        this.table.setAttribute("id", "playTable");
         let tbody = document.createElement("tbody");
         this.tiles = [ [], [], [], [] ]; // saving tiles on the field
         this.cells = [ [], [], [], [] ]; // link to table cells
@@ -21,7 +24,31 @@ class Playfield {
 
         this.table.appendChild(tbody);
         parent.appendChild(this.table);
+
+        this.addRandomTile();
+        this.addRandomTile();
+
+        function calcBestScore () {
+            let maxTile = 2;
+
+            for (let i = 0; i < this.tiles.length; i++) {
+                for (let j = 0; j < this.tiles[i].length; j++) {
+                    if (this.tiles[i][j]) maxTile = (this.tiles[i][j].value > maxTile) ? this.tiles[i][j].value : maxTile;
+                }
+            }
+
+            let currentScore = document.getElementById("currentScore");
+            let personalBestScore = document.getElementById("personalBestScore");
+            let bestScore = document.getElementById("bestScore");
+
+            if (maxTile > currentScore.innerHTML){
+                currentScore.innerHTML = getScore("current");
+                personalBestScore.innerHTML = getScore("personal");
+                bestScore.innerHTML = getScore("best");
+            }
+        }
     }
+
 
     addTile(y, x, n) {
         if (this.tiles[y][x]){
@@ -38,7 +65,7 @@ class Playfield {
     }
 
     moveTile(y, x, ny, nx) {
-        // Check is input is correct
+        /* Check is input is correct */
         if (!this.tiles[y][x]) {
             console.log(`Error while moving ${y},${x} to ${ny},${nx}: incorrect cords ${y},${x}`);
             return;
@@ -60,7 +87,7 @@ class Playfield {
     }
 
     addRandomTile() {
-        // Add new "2" tile to empty cell
+        /* Add new "2" tile to empty cell */
         function randomInteger(min, max) {
             let rand = min - 0.5 + Math.random() * (max - min + 1);
             rand = Math.round(rand);
@@ -71,7 +98,6 @@ class Playfield {
         let x = randomInteger(0, 3);
 
         while(this.tiles[y][x]){
-            console.log(`Random tile to cell ${y},${x}`);
             y = randomInteger(0, 3);
             x = randomInteger(0, 3);
         }
@@ -80,7 +106,7 @@ class Playfield {
     }
 
     moveAllTiles(keyCode) {
-        this.addRandomTile();
+        let movedAnyTile = false;
 
         switch (keyCode) {
             case 37:
@@ -92,12 +118,19 @@ class Playfield {
 
                             for (let i = x - 1; i >= 0; i--) {
                                 if (this.tiles[y][i]) {
-                                    if (this.tiles[y][i].value === this.tiles[y][x].value) this.sumTiles(y, x, y, i);
-                                    break;
+                                    if (this.tiles[y][i].value === this.tiles[y][x].value) {
+                                        this.sumTiles(y, x, y, i);
+                                        nextCell = null;
+                                        movedAnyTile = true;
+                                        break;
+                                    }
                                 } else nextCell = i;
                             }
 
-                            if (nextCell !== null) this.moveTile(y, x, y, nextCell);
+                            if (nextCell !== null) {
+                                this.moveTile(y, x, y, nextCell);
+                                movedAnyTile = true;
+                            }
                         }
                     }
                 }
@@ -112,12 +145,19 @@ class Playfield {
 
                             for (let i = y - 1; i >= 0; i--) {
                                 if (this.tiles[i][x]) {
-                                    if (this.tiles[i][x].value === this.tiles[y][x].value) this.sumTiles(y, x, y, i);
-                                    break;
+                                    if (this.tiles[i][x].value === this.tiles[y][x].value) {
+                                        this.sumTiles(y, x, i, x);
+                                        nextCell = null;
+                                        movedAnyTile = true;
+                                        break;
+                                    }
                                 } else nextCell = i;
                             }
 
-                            if (nextCell !== null) this.moveTile(y, x, nextCell, x);
+                            if (nextCell !== null) {
+                                this.moveTile(y, x, nextCell, x);
+                                movedAnyTile = true;
+                            }
                         }
                     }
                 }
@@ -132,12 +172,19 @@ class Playfield {
 
                             for (let i = x + 1; i < 4; i++) {
                                 if (this.tiles[y][i]) {
-                                    if (this.tiles[y][i].value === this.tiles[y][x].value) this.sumTiles(y, x, y, i);
-                                    break;
+                                    if (this.tiles[y][i].value === this.tiles[y][x].value) {
+                                        this.sumTiles(y, x, y, i);
+                                        nextCell = null;
+                                        movedAnyTile = true;
+                                        break;
+                                    }
                                 } else nextCell = i;
                             }
 
-                            if (nextCell !== null) this.moveTile(y, x, y, nextCell);
+                            if (nextCell !== null) {
+                                this.moveTile(y, x, y, nextCell);
+                                movedAnyTile = true;
+                            }
                         }
                     }
                 }
@@ -152,12 +199,19 @@ class Playfield {
 
                             for (let i = y + 1; i < 4; i++) {
                                 if (this.tiles[i][x]) {
-                                    if (this.tiles[i][x].value === this.tiles[y][x].value) this.sumTiles(y, x, i, x);
-                                    break;
+                                    if (this.tiles[i][x].value === this.tiles[y][x].value) {
+                                        this.sumTiles(y, x, i, x);
+                                        nextCell = null;
+                                        movedAnyTile = true;
+                                        break;
+                                    }
                                 } else nextCell = i;
                             }
 
-                            if (nextCell !== null) this.moveTile(y, x, nextCell, x);
+                            if (nextCell !== null) {
+                                this.moveTile(y, x, nextCell, x);
+                                movedAnyTile = true;
+                            }
                         }
                     }
                 }
@@ -166,7 +220,9 @@ class Playfield {
             default:
                 return;
         }
-    };
+
+        if (movedAnyTile) this.addRandomTile();
+    }
 }
 
 class Tile {
@@ -177,7 +233,13 @@ class Tile {
     }
 }
 
-document.addEventListener("keydown", handleKeypress);
+function newGame() {
+    let playtable = document.getElementById("playTable");
+
+    if (playtable) playtable.parentElement.removeChild(playtable);
+
+    field = new Playfield(document.querySelector(".playField"));
+}
 
 function handleKeypress(event) {
     if (event.keyCode === 37 || event.keyCode === 38 ||
@@ -187,13 +249,5 @@ function handleKeypress(event) {
     }
 }
 
-let field = new Playfield(document.querySelector(".playField"));
-
-field.addTile(0, 1, 4);
-field.addTile(1, 0, 32);
-field.addTile(1, 1, 32);
-field.addTile(1, 3, 2);
-field.addTile(2, 0, 16);
-field.addTile(2, 1, 8);
-// field.addTile(3, 2, 8);
-// field.moveTile(1, 3, 0, 1);
+newGame();
+document.addEventListener("keydown", handleKeypress);

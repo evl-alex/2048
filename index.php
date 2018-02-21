@@ -36,7 +36,7 @@ include 'config.php';
         <section class="playField">
         </section>
     </div>
-    <script src="menu.js"></script>
     <script src="playfield.js"></script>
+    <script src="menu.js"></script>
 </body>
 </html>
